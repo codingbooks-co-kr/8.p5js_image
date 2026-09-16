@@ -1,0 +1,24 @@
+// 마우스의 좌우 움직임에 따른 이미지 확대 또는 축소
+
+let img, d;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(400, 400);
+  d = createDiv('');			// 브라우저 화면(→캔버스 바로 다음)에 텍스트 출력
+  d.style('font-size', '20px');		// 텍스트 폰트 크기를 (20픽셀로) 설정
+}
+
+function draw() {
+  background(0);
+  let s = constrain(mouseX, 0, width);
+  s = map(s, 0, width, 0.5, 2.0);	// 스케일값 범위: 0.5∼2.0
+  d.html('스케일값: ' + nf(s,1,1));	// 텍스트 출력
+
+  image(img, 30, 30);			// scale() 적용 전 이미지
+  scale(s);				// 마우스의 좌우 움직임에 따라 스케일값(s) 변경
+  image(img, 30, 30);			// scale() 적용 후 이미지
+}

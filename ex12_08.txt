@@ -1,0 +1,39 @@
+// handpose: 손가락 포인트(→21개)을 원으로 표시
+
+let video, handpose, hands = [], modelReady = false;
+
+function setup() {
+  createCanvas(640, 480);
+  video = createCapture(VIDEO);	// 실시간 비디오 요소 생성
+  video.hide();				// 비디오 요소 숨김
+  handpose = ml5.handpose(video, getModel);	  // handpose 객체 생성→getModel() 호출
+  handpose.on('hand', getResult);	 // 손 감지되면 ‘hand’ 이벤트 발생→getResult() 호출
+}
+
+function draw() {
+  image(video, 0, 0, width, height);	// 캔버스에 비디오 프레임 표시
+  if (!modelReady) {			// 모델 로딩이 완료되기 전인 경우
+    background(0);
+    fill(255);
+    textSize(50);
+    textAlign(CENTER);
+    text('handPose 모델 로딩 중!', width/2, height/2);
+  }
+  if (hands.length > 0) {				// 손이 감지된 경우
+    let landmarks = hands[0].landmarks;
+    for (let i = 0; i < landmarks.length; i++) {		// 손 및 손가락 포인트를 원으로 표시
+      fill(255, 0, 0);
+      ellipse(landmarks[i][0], landmarks[i][1], 10, 10);
+    }
+  }
+}
+
+function getModel() {				// 콜백함수
+  modelReady = true;
+  console.log('handpose 모델 로딩 완료!');
+}
+
+function getResult(results) {			// 콜백함수
+  //console.log(results);				// 인식 결과를 콘솔창에 출력
+  hands = results;				// 인식 결과를 전역변수인 hands에 저장
+}

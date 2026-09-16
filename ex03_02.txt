@@ -1,0 +1,16 @@
+// 좌우 반사하는 원
+
+let x = 0, velocity = 1;
+
+function setup() {
+  createCanvas(300, 300);
+}
+
+function draw() {
+  background(0);
+  ellipse(x, height/2, 30, 30);
+  x += velocity;			// velocity값에 따라 x는 1씩 증가 또는 감소
+  if (x < 0 || x > width) {		// 좌우 반사 조건
+    velocity *= -1;			// velocity는 1 또는 -1
+  }
+}

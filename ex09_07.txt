@@ -1,0 +1,28 @@
+// 이미지의 다양한 필터링
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width, img.height);
+  createDiv('숫자키(1-8)를 눌러주세요');
+  background(0);
+}
+
+function draw() { }
+
+function keyPressed() {
+  image(img, 0, 0);		// 원본 이미지 표시
+
+  if (key === '1') filter(THRESHOLD);
+  if (key === '2') filter(GRAY);
+  if (key === '3') filter(OPAQUE);
+  if (key === '4') filter(INVERT);
+  if (key === '5') filter(POSTERIZE, 3);
+  if (key === '6') filter(BLUR, 3);
+  if (key === '7') filter(ERODE);
+  if (key === '8') filter(DILATE);
+}

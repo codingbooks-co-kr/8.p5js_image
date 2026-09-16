@@ -1,0 +1,30 @@
+// 마우스 좌우 이동에 따라 이미지의 모자이크화 크기 변화
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width, img.height);
+}
+
+function draw() {
+  background(0);
+  img.loadPixels();			// 이미지(img)의 pixels[]에 접근하기 전 픽셀값 로드
+  let x = constrain(mouseX, 0, width);
+  let size = int(map(x, 0, width, 1, 20));	// 모자이크 크기 범위: 1∼20
+  for (let y = 0; y < img.height; y += size) {
+    for (let x = 0; x < img.width; x += size) {
+      let index = (x + y * img.width) * 4;	// x행 y열의 픽셀 위치
+      let r = img.pixels[index+0]; 		// Red값 읽기
+      let g = img.pixels[index+1]; 		// Green값 읽기
+      let b = img.pixels[index+2]; 		// Blue값 읽기
+
+      noStroke();
+      fill(r, g, b);				// 모자이크 색상
+      rect(x, y, size, size);			// 사각형으로 모자이크화
+    }
+  }
+}

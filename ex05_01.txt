@@ -1,0 +1,17 @@
+// 캔버스 상에 이미지 출력
+
+let img;					// ❶ (이미지 객체) 변수 선언
+
+function preload() {
+  img = loadImage('flower.jpg');	// ❷ 이미지 파일 읽고 객체(img) 생성
+}
+
+function setup() {
+  createCanvas(500, 500);	// 또는 createCanvas(img.width, img.height);
+  console.log(img);
+}
+
+function draw() {
+  background(0);
+  image(img, 0, 0);		// ❸ 캔버스에 이미지 표시
+}

@@ -1,0 +1,25 @@
+// 마우스의 움직임에 따른 이미지의 모자이크화 크기 가변
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width, img.height);
+}
+
+function draw() {
+  background(0);
+  let x = constrain(mouseX, 0, width);
+  let size = int(map(x, 0, width, 1, 20));	// 모자이크 크기(1∼20) 가변
+  for (let y = 0; y < img.height; y += size) {
+    for (let x = 0; x < img.width; x += size) {
+      let c = img.get(x, y); 			// 이미지로부터 픽셀값 읽기
+      noStroke();
+      fill(c);					// 픽셀값을 사각형의 색상값으로 설정
+      rect(x, y, size, size);			// 모자이크 크기의 사각형
+    }
+  }
+}

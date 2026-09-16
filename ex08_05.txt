@@ -1,0 +1,32 @@
+// 이미지의 픽셀값을 랜덤하게 읽고 밝기값에 따라 크기가 다른 원으로 표시
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width*2, img.height);
+  background(200);
+}
+
+function draw() {
+  image(img, 0, 0);			// 원본 이미지 표시
+  img.loadPixels();			// 이미지(img)의 pixels[]에 접근하기 전 픽셀값 로드
+  for (let i = 0; i < 100; i++) {			// 반복문으로 빠르게 처리
+    let x = int(random(img.width));
+    let y = int(random(img.height));
+    let index = (x + y * img.width) * 4; 	// x행 y열의 픽셀 위치
+    let r = img.pixels[index+0]; 		// Red값 읽기
+    let g = img.pixels[index+1]; 		// Green값 읽기
+    let b = img.pixels[index+2]; 		// Blue값 읽기
+
+    let gray = (r + g + b) / 3; 		// RGB 컬러값의 평균(→그레이스케일 밝기값)
+    let size = map(gray, 0, 255, 1, 15); 	// 원의 크기 가변(1∼15)
+
+    noStroke();
+    fill(r, g, b, 100); 				// 투명도를 적용하여 색상을 부드럽게 표현
+    ellipse(img.width+x, y, size, size); 	// 밝기값에 따라 원의 크기 가변
+  }
+}

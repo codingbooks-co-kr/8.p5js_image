@@ -1,0 +1,40 @@
+// 마우스를 따라 움직이는 원형 부분의 이미지만 보임
+
+let img0, img1, val;
+
+function preload() {
+  img0 = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img0.width*2, img0.height);
+  img1 = createImage(img0.width, img0.height);
+}
+
+function draw() {
+  img0.loadPixels();			// 이미지(img0)의 pixels[]에 접근하기 전 픽셀값 로드
+  img1.loadPixels();			// 이미지(img1)의 pixels[]에 접근하기 전 픽셀값 로드
+  for (let y = 0; y < img0.height; y++) {	// 중첩 for문 사용
+    for (let x = 0; x < img0.width; x++) {
+      let index = (x + y * img0.width) * 4;	// x행 y열의 픽셀 위치
+      let r = img0.pixels[index+0]; 		// Red값 읽기
+      let g = img0.pixels[index+1]; 		// Green값 읽기
+      let b = img0.pixels[index+2]; 		// Blue값 읽기
+
+      let d = dist(x, y, mouseX, mouseY);	// (x,y) 좌표와 마우스 좌표 사이 거리 측정
+      if (d < 50) val = 1;			// 마우스를 중심으로 반지름 50 미만일 때
+      else val = 0;				// 반지름 50 이상일 때 
+      r *= val;					// r값은 0 또는 1
+      g *= val;					// g값은 0 또는 1
+      b *= val;					// b값은 0 또는 1
+
+      img1.pixels[index+0] = r;		// Red값 쓰기
+      img1.pixels[index+1] = g;		// Green값 쓰기
+      img1.pixels[index+2] = b;		// Blue값 쓰기
+      img1.pixels[index+3] = 255; 		// Alpha값 쓰기 (투명: 0, 불투명: 255)
+    }
+  }
+  img1.updatePixels();				// 이미지(img1)의 변경된 pixels[] 업데이트
+  image(img0, 0, 0); 				// 원본 이미지
+  image(img1, img0.width, 0); 		// 결과 이미지
+}

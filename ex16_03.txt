@@ -1,0 +1,49 @@
+// p5.js: 가변저항값 수신하여 이미지 변환 제어
+
+let port = new p5.WebSerial();		// 시리얼 통신 객체 생성
+let img0, img1, d, val = 0;
+
+function preload() {
+  img0 = loadImage('landscape0.jpg');
+  img1 = loadImage('landscape1.jpg');
+}
+
+function setup() {
+  createCanvas(img0.width, img0.height);
+  port.getPorts();			// 포트 사용 가능 여부 확인
+  port.on('noport', makePortButton);	// 기존 선택한 포트가 없으면 makePortButton() 호출
+  port.on('portavailable', openPort);	// 사용 가능한 포트가 있으면 openPort() 자동 호출
+  port.on('data', serialEvent);		// 수신값이 있으면 serialEvent() 자동 호출
+  
+  d = createDiv('');
+  d.style('font-size', '20px');		// 폰트 크기(20픽셀) 설정
+}
+
+function draw() { 
+  tint(255, 255-val);			// val값이 255에 근접하면 투명도는 0에 가까워짐
+  image(img0, 0, 0, width, height);	// 이미지(img0)가 투명하게 사라짐
+
+  tint(255, val);				// val값이 255에 근접하면
+  image(img1, 0, 0, width, height);	// 이미지(img1)가 불투명하게 드러남
+  d.html('수신값: ' + val);
+}
+
+function serialEvent() {				// 콜백함수: 수신값이 있으면 자동 호출
+  val = port.read();				// 수신값(0∼255)
+  port.write('B');        			// 송신
+}
+
+function makePortButton() {			// 포트 첫 연결 시 포트 선택 버튼 생성
+  let portButton = createButton('포트 선택');	// 버튼 생성
+  portButton.mousePressed(choosePort);	// 버튼 누르면 choosePort() 자동 호출
+  function choosePort() {			// 콜백함수
+    port.requestPort();				// 시리얼 포트 선택창 오픈
+  }
+}
+
+function openPort() {				// 콜백함수
+  port.open().then(initiateSerial);		// 포트를 오픈 후 initiateSerial() 자동 호출
+  function initiateSerial() {			// 콜백함수
+    console.log('포트 오픈');
+  }
+}

@@ -1,0 +1,29 @@
+// 입방체 회전, 마우스를 누를 때 저장
+
+let img, degree = 0;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(500, 500, WEBGL);
+  //pixelDensity(1);
+}
+
+function draw() {
+  background(0);
+  rotateX(radians(degree));
+  texture(img);
+  box(200);
+  degree++;
+}
+
+function mousePressed() {
+  if (mouseButton === LEFT) {
+    save('outputCanvas1.png');
+  }
+  if (mouseButton === RIGHT) {
+    saveCanvas('outputCanvas2', 'png');
+  }
+}

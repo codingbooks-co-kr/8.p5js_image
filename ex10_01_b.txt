@@ -1,0 +1,11 @@
+// 동영상 파일 재생: 캔버스 미사용
+
+let video;
+
+function setup() {
+  noCanvas();
+  video = createVideo('bird.mp4');
+  video.play();
+}
+
+function draw() { }

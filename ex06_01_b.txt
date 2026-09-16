@@ -1,0 +1,25 @@
+// 이미지 좌표 이동
+
+let img;
+
+function preload() {
+  img = loadImage('flower.jpg');
+}
+
+function setup() {
+  createCanvas(400, 300);
+}
+
+function draw() { 
+  background(0); 
+  image(img, 0, 0);
+  
+  translate(50, 50);	// ❶이동
+  image(img, 0, 0);
+  
+  translate(50, 50);	// ❷이동
+  image(img, 0, 0);
+
+  translate(50, 50);	// ❸이동
+  image(img, 0, 0);
+}

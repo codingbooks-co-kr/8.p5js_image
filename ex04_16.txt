@@ -1,0 +1,27 @@
+// 마우스 왼쪽 버튼을 누르면 원의 크기가 한번 증가, 오른쪽 버튼을 누르는 동안 지속적 증가
+
+let d = 10.0;
+
+function setup() {
+  createCanvas(300, 300);
+  noLoop();		// draw() 함수의 반복 실행 일시 정지
+}
+
+function draw() {
+  background(0);
+  ellipse(width/2, height/2, d, d);
+  d += 10.0;
+}
+
+function mousePressed() {
+  if (mouseButton === LEFT) {
+    redraw();		// draw() 함수의 1회 실행
+  }
+  if (mouseButton === RIGHT) {
+    loop();		// draw() 함수의 무한 반복 실행
+  }
+}
+
+function mouseReleased() {
+  noLoop();		// draw() 함수의 반복 실행 일시 정지
+}

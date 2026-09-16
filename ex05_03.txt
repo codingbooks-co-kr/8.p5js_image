@@ -1,0 +1,18 @@
+// 서로 다른 이미지 두 개를 출력
+
+let img0, img1;				// 변수 선언
+
+function preload() {
+  img0 = loadImage('flower.jpg');	// 이미지 파일1 읽고 이미지 객체(img0) 생성
+  img1 = loadImage('landscape.jpg');	// 이미지 파일2 읽고 이미지 객체(img1) 생성
+}
+
+function setup() {
+  createCanvas(500, 500);
+}
+
+function draw() {
+  background(0);
+  image(img0, 100, 30);		// 캔버스에 이미지1 표시
+  image(img1, 100, 250);		// 캔버스에 이미지2 표시
+}

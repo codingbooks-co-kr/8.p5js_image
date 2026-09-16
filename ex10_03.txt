@@ -1,0 +1,17 @@
+// 동영상 프레임을 복수 개 출력
+
+let video;
+
+function setup() {
+  createCanvas(500, 400);
+  video = createVideo('bird.mp4');	// 동영상 파일의 비디오 요소 생성
+  video.play();				// 동영상 재생
+  video.hide();				// 비디오 요소 숨김
+}
+
+function draw() {
+  background(0);
+  image(video, 0, 0);			// 캔버스에 첫 번째 동영상 프레임 표시
+  image(video, 100, 100);		// 캔버스에 두 번째 동영상 프레임 표시
+  image(video, 200, 200);		// 캔버스에 세 번째 동영상 프레임 표시
+}

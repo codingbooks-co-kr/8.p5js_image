@@ -1,0 +1,17 @@
+// 마우스를 따라오는 비디오 영상 (마우스의 위치는 비디오 프레임의 중심)
+
+let video;
+
+function setup() {
+  createCanvas(500, 400);
+  imageMode(CENTER);		// 이미지 정렬 모드: 프레임의 중심에서 폭, 높이 설정
+  video = createCapture(VIDEO);	// 실시간 비디오 요소 생성
+  video.hide();			// 비디오 요소 숨김
+}
+
+function draw() {
+  background(0);
+
+  // 마우스의 현재 위치 좌표에 비디오 프레임 출력
+  image(video, mouseX, mouseY, 300, 200);
+}

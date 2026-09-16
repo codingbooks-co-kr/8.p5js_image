@@ -1,0 +1,32 @@
+// 컬러 비디오 영상에서 그레이스케일 비디오 영상으로 변환
+
+let video;
+
+function setup() {
+  createCanvas(400, 300);
+  pixelDensity(1);				// 픽셀당 하나의 픽셀만 표시
+  video = createCapture(VIDEO);		// 실시간 비디오 요소 생성
+  video.size(width, height);			// 비디오 요소의 크기 설정
+  video.hide();					// 비디오 요소 숨김
+}
+
+function draw() {
+  loadPixels();				// 캔버스의 pixels[]에 접근하기 전 픽셀값 로드
+  video.loadPixels();			// 비디오(video)의 pixels[]에 접근하기 전 픽셀값 로드
+  for (let y = 0; y < video.height; y++) {
+    for (let x = 0; x < video.width; x++) {
+      let index = (x + y * video.width) * 4;	// x행 y열의 픽셀 위치
+      let r = video.pixels[index+0]; 		// Red값 읽기
+      let g = video.pixels[index+1]; 		// Green값 읽기
+      let b = video.pixels[index+2]; 		// Blue값 읽기
+
+      let gray = (r + g + b) / 3;		// RGB 컬러값의 평균(→그레이스케일 밝기값)
+
+      pixels[index+0] = gray; 			// Red값 쓰기
+      pixels[index+1] = gray; 			// Green값 쓰기
+      pixels[index+2] = gray; 			// Blue값 쓰기
+      pixels[index+3] = 255;			// Alpha값 쓰기 (투명: 0, 불투명: 255)
+    }
+  }
+  updatePixels();				// 캔버스의 변경된 pixels[] 업데이트
+}

@@ -1,0 +1,16 @@
+// 한쪽으로 반사하는 원
+
+let x = 0, velocity = 1;
+
+function setup() {
+  createCanvas(300, 300);
+}
+
+function draw() {
+  background(0);
+  ellipse(x, height/2, 30, 30);
+  x += velocity;		// velocity값에 따라 오른쪽 또는 왼쪽 방향으로 이동
+  if (x > width) {		// 오른쪽 경계에 부딪치는 경우
+    velocity *= -1;		// velocity = -1이 되고 x는 왼쪽으로 이동
+  }
+}

@@ -1,0 +1,21 @@
+// 배열에 저장된 이미지 객체가 1초마다 순서대로 출력
+
+let imgs = [], num = 0;
+
+function preload() {
+  let filenames = ['landscape0.jpg', 'landscape1.jpg', 'landscape2.jpg'];
+  for (let i = 0; i < filenames.length; i++) {
+    imgs[i] = loadImage(filenames[i]);
+  }
+}
+
+function setup() {
+  createCanvas(500, 300);
+  frameRate(1);			// 프레임율=1이므로 초당 draw()의 프레임 실행속도=1
+}
+
+function draw() {
+  num %= imgs.length;	// num = 0→1→2 순을 반복 (동일 코드: num %= 3;)
+  image(imgs[num], 0, 0, width, height);
+  num++;
+}

@@ -1,0 +1,28 @@
+// RGB 컬러모드: 슬라이더로 RGB 컬러 변경
+
+let d, slider1, slider2, slider3;
+
+function setup() {
+  createCanvas(300, 300);
+  colorMode(RGB, 255);		// RGB 컬러모드 (기본, 생략 가능)
+
+  slider1 = createSlider(0, 255, 0);	// 슬라이더 생성 (R 범위:0∼255, 초깃값:0)
+  slider1.position(0, height+30);	// 슬라이더 위치 설정
+  
+  slider2 = createSlider(0, 255, 0);	// 슬라이더 생성 (G 범위:0∼255, 초깃값:0)
+  slider2.position(0, height+50);	// 슬라이더 위치 설정
+  
+  slider3 = createSlider(0, 255, 0);	// 슬라이더 생성 (B 범위:0∼255, 초깃값:0)
+  slider3.position(0, height+70);	// 슬라이더 위치 설정
+  
+  d = createDiv('');
+  d.style('font-size', '20px');		// 텍스트 폰트 크기를 (20픽셀로) 설정
+}
+
+function draw() {
+  let r = slider1.value();		// 슬라이더값(r) 읽기
+  let g = slider2.value();		// 슬라이더값(g) 읽기
+  let b = slider3.value();		// 슬라이더값(b) 읽기
+  background(r, g, b);			// 배경색에 RGB 슬라이더값 적용
+  d.html('R:' + nf(r, 3) + ',  G:' + nf(g, 3) + ',  B:' + nf(b, 3));
+}

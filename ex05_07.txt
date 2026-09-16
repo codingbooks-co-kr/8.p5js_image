@@ -1,0 +1,25 @@
+// 이미지 좌우 반사
+
+let img, x = 0, velocity = 2;
+
+function preload() {
+  img = loadImage('flower.jpg');
+}
+
+function setup() {
+  createCanvas(500, 500);
+  imageMode(CENTER);	// 이미지 정렬 모드: 이미지의 중심에서 폭,높이 설정
+}
+
+function draw() {
+  // 페이딩 효과
+  noStroke();
+  fill(0, 10);
+  rect(0, 0, width, height);
+
+  image(img, x, height/2, 100, 100);
+  x += velocity;      		// 이미지의 좌우 방향 위치 이동  
+  if (x < 0 || x > width) {    	// 캔버스의 좌우 경계에 도달하면 
+    velocity *= -1;      	// 이미지의 이동 속도는 동일하고 방향이 바뀜
+  }
+}

@@ -1,0 +1,32 @@
+// HSB 컬러모드: 마우스를 상하좌우로 움직여 HSB 색상환 컬러 변경
+
+let d;
+
+function setup() {
+  createCanvas(500, 500);
+  background(200);
+  colorMode(HSB, 360, 100, 100);		// HSB 컬러모드 (기본)
+  angleMode(DEGREES);			// DEGREES 모드 설정 (0o∼360o 범위)
+  d = createDiv('');
+  d.style('font-size', '20px');			// 텍스트 폰트 크기를 (20픽셀로) 설정
+}
+
+function draw() {
+  let s = constrain(mouseX, 0, width);
+  s = map(s, 0, width, 0, 100);		// S값(채도: 좌우) 범위: 0∼100 
+
+  let b = constrain(mouseY, 0, height);
+  b = map(b, 0, height, 0, 100);		// B값(명도: 상하) 범위: 0∼100 
+
+  for (let h = 0; h < 360; h += 20) {		// H값(색상: 원형) 범위: 0∼360
+    let x = 250 + 200 * cos(h);
+    let y = 250 + 200 * sin(h);
+    noStroke();
+    fill(h, s, b);					// HSB 색상값 적용
+    ellipse(x, y, 60, 60);
+  }
+  fill(255);
+  textSize(20);
+  text('0°(360°)', width/1.5, height/2);
+  d.html('S(채도):' + nf(int(s), 3) + ',  B(명도):' + nf(int(b), 3));
+}

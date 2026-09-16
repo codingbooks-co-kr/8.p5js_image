@@ -1,0 +1,19 @@
+// 랜덤한 위치, 색상, 크기로 원을 생성
+
+function setup() {
+  createCanvas(300, 300);
+  background(0);
+}
+
+function draw() {
+  let x = random(width);		// 랜덤 x 위치 좌표
+  let y = random(height);		// 랜덤 y 위치 좌표
+  let c = random(255);		// 랜덤 색상
+  let d = random(10, 50);		// 랜덤 크기
+  display(x, y, c, d);			// 함수 호출부
+}
+
+function display(xx, yy, cc, dd) {	// 함수 본체
+  fill(cc, 255, 255, 200);
+  ellipse(xx, yy, dd, dd);
+}

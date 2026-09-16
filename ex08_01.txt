@@ -1,0 +1,22 @@
+// RGB 요소 중 Green과 Blue 값을 랜덤 출력
+
+function setup() {
+  createCanvas(256, 256);			// x: 0∼255, y: 0∼255
+  console.log('픽셀 밀도: ' + pixelDensity());	// 픽셀 밀도 출력
+  pixelDensity(1);		// 픽셀 밀도를 1로 설정 (=픽셀당 하나의 픽셀만 표시)
+  background(0);
+}
+
+function draw() {
+  loadPixels();				// 캔버스의 pixels[]에 접근하기 전 픽셀값 로드
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      let index = (x + y * width) * 4;		// x행 y열의 픽셀 위치
+      pixels[index+0] = x			// Red값 쓰기
+      pixels[index+1] = random(255);		// Green값을 랜덤값으로 쓰기
+      pixels[index+2] = random(255);		// Blue값을 랜덤값으로 쓰기
+      pixels[index+3] = 255;			// Alpha값을 255로 쓰기
+    }
+  }
+  updatePixels();			// 캔버스의 변경된 pixels[] 업데이트
+}

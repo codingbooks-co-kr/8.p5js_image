@@ -1,0 +1,42 @@
+// 다운로드한 모델을 사용한 인식 (VS Code에서 실행)
+
+let video, featureExtractor, classifier; 
+let p, label = '시작', confidence = 0;
+
+function setup() {
+  createCanvas(640, 480);
+  video = createCapture(VIDEO);		// 실시간 비디오 요소 생성
+  video.size(width, height);			// 비디오 요소의 크기 설정
+  video.hide();					// 비디오 요소 숨김
+
+  let options = { numLabels: 2 };		// 학습 및 분류할 레이블 수
+  featureExtractor = ml5.featureExtractor('MobileNet', options, getModel);
+  classifier = featureExtractor.classification(video);
+  p = createP('');
+  p.style('font-size', '30px');
+}
+
+function draw() {
+  image(video, 0, 0);			// 캔버스에 비디오 프레임 표시
+  p.html(label + ' : ' + confidence + '%');
+}
+
+function getModel() {			// 콜백함수
+  label = 'MobileNet 모델 로딩 완료!';
+  classifier.load('model.json', classify);	// 모델('model.json')을 로드하고 classify() 호출
+}
+
+function classify() {			// 콜백함수
+  classifier.classify(getResult);		// getResult() 호출 → 인식 결과 출력
+}
+
+function getResult(error, results) {	// 콜백함수
+  if (error) {				// 인식 오류 시
+    console.log(error);
+    return;				// 함수 실행 종료
+  } else {				// 인식 성공 시
+    label = results[0].label;		// 인식 결과
+    confidence = int(results[0].confidence * 100);	// 신뢰도
+    classify();				// getResult() 재호출함으로써 반복 인식
+  }
+}

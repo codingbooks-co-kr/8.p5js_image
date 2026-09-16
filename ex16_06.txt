@@ -1,0 +1,57 @@
+// p5.js: 가변저항값→이진화 제어, 버튼값→필터링 제어, 마우스 현재 위치 좌표의 RGB 픽셀값 송신
+
+let port = new p5.WebSerial();		// 시리얼 통신 객체 생성
+let video, d, th = 0, choice = 0, r = 0, g = 0, b = 0;
+
+function setup() {
+  createCanvas(640, 480);
+  video = createCapture(VIDEO);	// 실시간 비디오 요소 생성
+  video.hide();				// 비디오 요소 숨김
+
+  port.getPorts();			// 포트 사용 가능 여부 확인
+  port.on('noport', makePortButton);	// 기존 선택한 포트가 없으면 makePortButton() 호출
+  port.on('portavailable', openPort);	// 사용 가능한 포트가 있으면 openPort() 자동 호출
+  port.on('data', serialEvent);		// 수신값이 있으면 serialEvent() 자동 호출
+
+  d = createDiv('');
+  d.style('font-size', '20px');		// 폰트 크기(20픽셀) 설정
+}
+
+function draw() {
+  image(video, 0, 0); 				// 캔버스에 비디오 프레임 표시
+  if (choice === 0) filter(POSTERIZE, 2);	// 버튼 누르면 POSTERIZE 필터링
+  else filter(THRESHOLD, th);			// 버튼 누르지 않으면 THRESHOLD 필터링
+
+  let c = get(mouseX, mouseY);		// 마우스의 현재 위치 좌표의 색상값 읽기
+  r = red(c);					// 색상값 중 red 요소 읽기
+  g = green(c);					// 색상값 중 green 요소 읽기
+  b = blue(c);					// 색상값 중 blue 요소 읽기
+  d.html('문턱값: ' + nf(th, 1, 2) + ', 픽셀값: ' + r + ' ' + g + ' ' + b);
+}
+
+function serialEvent() {			// 콜백함수: 시리얼버퍼에 수신값이 있으면 자동 호출
+  let str = port.readLine();		// 개행까지의 수신 문자열 읽기
+  if (!str) return;			// 입력 문자열(→str)이 없으면 함수 실행 종료
+  trim(str);				// 입력 문자열(→str)의 시작과 끝에 붙은 공백 삭제
+  let val = split(str, ',');			// 콤마로 구분된 문자열을 val 배열에 저장
+  if (val.length === 2) {		// 배열의 크기가 두 개일 때
+    th = map(float(val[0]), 0, 1023, 0, 1);	// 실수형으로 변환 후 값 범위 변경
+    choice = int(val[1]);			// 정수형으로 변환
+  }
+  port.write(r + ',' + g + ',' + b + '\n');	// 송신(문자열)
+}
+
+function makePortButton() {			// 포트 첫 연결 시 포트 선택 버튼 생성
+  let portButton = createButton('포트 선택');	// 버튼 생성
+  portButton.mousePressed(choosePort);	// 버튼 누르면 choosePort() 자동 호출
+  function choosePort() {			// 콜백함수
+    port.requestPort();				// 시리얼 포트 선택창 오픈
+  }
+}
+
+function openPort() {				// 콜백함수
+  port.open().then(initiateSerial);		// 포트를 오픈 후 initiateSerial() 자동 호출
+  function initiateSerial() {			// 콜백함수
+    console.log('포트 오픈');
+  }
+}

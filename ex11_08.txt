@@ -1,0 +1,17 @@
+// 슬라이더로 POSTERIZE 필터링 조절
+
+let video, slider;
+
+function setup() {
+  createCanvas(400, 300);
+  video = createCapture(VIDEO);		// 실시간 비디오 요소 생성
+  video.hide();					// 비디오 요소 숨김
+  slider = createSlider(2, 10, 2, 0.1);		// 범위(0∼255), 초깃값(0), 스텝크기(0.1)
+  slider.size(width);				// 슬라이더 크기 설정
+}
+
+function draw() {
+  image(video, 0, 0, width, height);		// 캔버스에 비디오 프레임 표시
+  let val = slider.value();			// 슬라이더값 읽기
+  filter(POSTERIZE, val);
+}

@@ -1,0 +1,26 @@
+// 마우스를 누르면 배열에 저장된 이미지 객체가 랜덤한 순서로 출력
+
+let imgs = [], num = 0;
+
+function preload() {				// 배열에 이미지 객체를 일괄 저장
+  let filenames = ['landscape0.jpg', 'landscape1.jpg', 'landscape2.jpg'];
+  for (let i = 0; i < filenames.length; i++) {
+    imgs[i] = loadImage(filenames[i]);
+  }
+}
+
+function setup() {
+  createCanvas(500, 300);
+}
+
+function draw() {
+  image(imgs[num], 0, 0, width, height);	// 이미지를 캔버스 크기로 출력
+  fill(255);
+  textSize(30);
+  text('Press the mouse!', mouseX, mouseY);
+}
+
+function mousePressed() {		// 마우스를 누를 때마다 num에는 랜덤값이 할당
+  num = int(random(0, imgs.length));
+  console.log(num);
+}

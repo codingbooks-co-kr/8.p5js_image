@@ -1,0 +1,22 @@
+// 구(sphere)에 이미지 텍스처를 매핑 및 회전
+
+let img, degree = 0;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(500, 500, WEBGL);	// 3차원 렌더러 사용
+  angleMode(DEGREES);		// DEGREES 모드 설정 (0o∼360o 범위)
+}
+
+function draw() {
+  background(0);
+  rotateX(degree);			// x축 회전
+  rotateY(degree);			// y축 회전
+  rotateZ(degree);			// z축 회전
+  texture(img);				// 텍스처 설정
+  sphere(200, 24, 24);			// 구 생성
+  degree++;				// 1도씩 증가
+}

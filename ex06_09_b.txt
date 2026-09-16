@@ -1,0 +1,16 @@
+// ❷ 꼭지점 연결 도형
+
+function setup() {
+  createCanvas(300, 300);
+  background(200);
+
+  noFill();
+  beginShape();
+  vertex(50, 50);
+  vertex(250, 50);
+  vertex(250, 250);
+  vertex(150, 250);
+  vertex(150, 150);
+  vertex(50, 150);
+  endShape();
+}

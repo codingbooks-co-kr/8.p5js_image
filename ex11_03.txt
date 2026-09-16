@@ -1,0 +1,17 @@
+// 실시간 비디오 영상 복수 개 출력
+
+let video;
+
+function setup() {
+  createCanvas(500, 500);
+  imageMode(CENTER);		// 이미지 정렬 모드: 프레임의 중심에서 폭, 높이 설정
+  video = createCapture(VIDEO);	// 실시간 비디오 요소 생성
+  video.hide();				// 비디오 요소 숨김
+}
+
+function draw() {
+  background(0);
+  for (let i = 0; i < 8; i++) {
+    image(video, (i+1)*40, (i+1)*40, (i+1)*40, (i+1)*40);
+  }
+}

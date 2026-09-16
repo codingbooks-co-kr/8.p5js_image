@@ -1,0 +1,19 @@
+// 동영상 프레임의 원운동
+
+let video, theta = 0;
+
+function setup() {
+  createCanvas(400, 400);
+  imageMode(CENTER);		// 이미지 정렬 모드: 프레임의 중심에서 폭, 높이 설정
+  video = createVideo('bird.mp4');	// 동영상 파일의 비디오 요소 생성
+  video.play();				// 동영상 재생
+  video.hide();				// 비디오 요소 숨김
+  background(0);
+}
+
+function draw() {
+  let x = width/2 + 100 * cos(theta);		// 동영상 프레임의 x축 코사인 운동
+  let y = height/2 + 100 * sin(theta);		// 동영상 프레임의 y축 사인 운동
+  image(video, x, y, 100, 100);		// 캔버스에 동영상 프레임 표시
+  theta += 0.01;
+}

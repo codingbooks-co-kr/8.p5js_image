@@ -1,0 +1,47 @@
+// 샤프닝(Sharpening) 마스크를 사용한 필터링
+
+let Mask = [ [ -1, -1, -1 ],		// 샤프닝(Sharpening) 마스크
+             [ -1, 9, -1 ],
+             [ -1, -1, -1 ] ];
+let img0, img1;
+
+function preload() {
+  img0 = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img0.width*2, img0.height);
+  img1 = createImage(img0.width, img0.height);
+  noLoop();				// draw() 반복 실행 정지
+}
+
+function draw() {
+  img0.loadPixels();			// 이미지(img0)의 pixels[]에 접근하기 전 픽셀값 로드
+  img1.loadPixels();			// 이미지(img1)의 pixels[]에 접근하기 전 픽셀값 로드
+  for (let y = 1; y < img0.height-1; y++) {	// 반복: 입력 이미지의 상하 최외곽 픽셀 제외
+    for (let x = 1; x < img0.width-1; x++) {	// 반복: 입력 이미지의 좌우 최외곽 픽셀 제외
+      let r = 0, g = 0, b = 0;			// 마스크 처리 시작 전 r, g, b 초기화
+      for (let i = 0; i < 3; i++) {		// 마스크 처리 시작 (마스크 크기=3×3)
+        for (let j = 0; j < 3; j++) {
+          let xIndex = x + i - 1; 		// xIndex:-1,0,1 (좌/중앙/우 인덱스)
+          let yIndex = y + j - 1;		// yIndex:-1,0,1 (상/중앙/하 인덱스)
+          let idx = (xIndex + yIndex * img0.width) * 4;
+          r += img0.pixels[idx+0] * Mask[i][j];
+          g += img0.pixels[idx+1] * Mask[i][j];
+          b += img0.pixels[idx+2] * Mask[i][j];
+        }
+      }					// 마스크 처리 끝
+      r = constrain(r, 0, 255);		// r값을 0∼255로 제한
+      g = constrain(g, 0, 255);		// g값을 0∼255로 제한
+      b = constrain(b, 0, 255);		// b값을 0∼255로 제한
+      let index = (x + y * img0.width) * 4;
+      img1.pixels[index+0] = r;		// Red값 쓰기
+      img1.pixels[index+1] = g;		// Green값 쓰기
+      img1.pixels[index+2] = b;		// Blue값 쓰기
+      img1.pixels[index+3] = 255; 	// Alpha값 쓰기 (투명: 0, 불투명: 255)
+    }
+  }
+  img1.updatePixels();			// 이미지(img1)의 변경된 pixels[] 업데이트
+  image(img0, 0, 0); 			// 원본 이미지
+  image(img1, img0.width, 0); 	// 출력 이미지
+}

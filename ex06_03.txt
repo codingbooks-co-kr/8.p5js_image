@@ -1,0 +1,24 @@
+// 마우스의 좌우 움직임에 따른 이미지 좌표 이동 및 좌표 회전
+
+let img, degree = 0;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(400, 400);
+  angleMode(DEGREES);		// DEGREES 모드 설정 (0o∼360o 범위)
+  imageMode(CENTER);		// 이미지 정렬 모드: 이미지의 중심에서 폭,높이 설정
+  background(0);
+}
+
+function draw() {
+  let x = constrain(mouseX, 0, width);
+  x = map(x, 0, width, 0, width/2);
+  translate(width/2, height/2);			// 좌표 이동
+  rotate(degree);				// 좌표 회전
+  translate(x, 0);				// 좌표 이동 (→이동 누적)
+  image(img, 0, 0, 200, 200);
+  degree++;					// 1도씩 증가
+}

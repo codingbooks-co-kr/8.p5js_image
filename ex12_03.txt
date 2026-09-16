@@ -1,0 +1,46 @@
+// imageClassifier: 캔버스에 이미지 파일을 끌어당겨놓으면 인식 결과 출력
+
+let canvas, classifier, img, d;
+
+function preload() {			// [질문12.1]의 [수정] 설명 참조
+  classifier = ml5.imageClassifier('MobileNet');		
+}
+
+function setup() {
+  canvas = createCanvas(400, 400);
+  canvas.drop(getFile);			// 캔버스에 드롭된 파일이 로드될 때 getFile() 호출
+  background(0);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(30);
+  text('이미지 파일 Drag & Drop', width/2, height/2);
+  d = createDiv('');
+  d.style('font-size', '20px');		// 텍스트 폰트 크기(20픽셀) 설정
+}
+
+function getFile(file) {		// 콜백함수
+  console.log(file);			// 파일 정보 확인
+  if (file.type === 'image') {		// 파일 형식이 'image'인 경우
+    img = loadImage(file.data, getImage);	// 이미지 파일 로딩 시 getImage() 호출
+  } else {
+    console.log('이미지 파일을 선택해 주세요!');
+  }
+}
+
+function getImage() {				// 콜백함수
+  resizeCanvas(img.width, img.height);		// 캔버스 크기를 이미지 크기로 재조정
+  image(img, 0, 0);				// 캔버스에 이미지 표시
+  classifier.classify(img, getResult);		// 이미지(img)가 주어지면 getResult() 호출
+}
+
+function getResult(error, results) {		// 콜백함수
+  if (error) {					// 인식 오류 시
+    console.log(error);
+    return;					// 함수 실행 종료
+  } else {					// 인식 성공 시
+    console.log(results);			// 인식결과 출력(후보 3개)
+    let label = results[0].label;				// 인식결과(제1후보)
+    let confidence = int(results[0].confidence * 100);		// 신뢰도(제1후보) 
+    d.html(label + ' : ' + confidence + '%');	// 인식결과 및 신뢰도 출력
+  }
+}

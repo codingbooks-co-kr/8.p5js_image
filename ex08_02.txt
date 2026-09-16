@@ -1,0 +1,33 @@
+// 마우스의 현재 위치 좌표의 이미지 픽셀값(=색상값)을 읽고 색상으로 표시
+
+let img, d;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width*2, img.height);
+  d = createDiv('');
+  d.style('font-size', '20px');		// 텍스트 폰트 크기를 (20픽셀로) 설정
+}
+
+function draw() {
+  image(img, 0, 0);			// 원본 이미지 표시
+  img.loadPixels();			// 이미지(img)의 pixels[]에 접근하기 전 픽셀값 로드
+  let x = constrain(mouseX, 0, img.width-1);
+  let y = constrain(mouseY, 0, img.height-1);
+  let index = (x + y * img.width) * 4;		// x행 y열의 픽셀 위치
+  let r = img.pixels[index+0];			// Red값 읽기
+  let g = img.pixels[index+1];			// Green값 읽기
+  let b = img.pixels[index+2];			// Blue값 읽기
+  d.html('R:' + nf(r, 3) + ',  G:' + nf(g, 3) + ',  B:' + nf(b, 3));
+
+  stroke(0);
+  line(x, 0, x, img.height);			// 마우스의 현재 x축 위치 선
+  line(0, y, img.width, y);			// 마우스의 현재 y축 위치 선
+
+  noStroke();
+  fill(r, g, b);				// RGB 색상 요소를 사각형 색상으로 표시
+  rect(img.width, 0, img.width, img.height);
+}

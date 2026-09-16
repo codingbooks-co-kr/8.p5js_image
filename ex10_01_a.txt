@@ -1,0 +1,15 @@
+// 동영상 파일 재생: 캔버스 사용
+
+let video;
+
+function setup() {
+  createCanvas(400, 300);
+  video = createVideo('bird.mp4');
+  video.play();	    // 동영상 재생
+  video.hide();	    // 비디오 요소 숨김
+}
+
+function draw() {
+  background(0);
+  image(video, 0, 0);
+}

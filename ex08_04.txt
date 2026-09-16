@@ -1,0 +1,30 @@
+// 이미지의 픽셀값을 랜덤하게 읽고 어두운 픽셀을 작은 원으로 표시
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width*2, img.height);
+  background(200);
+}
+
+function draw() {
+  image(img, 0, 0);			// 원본 이미지 표시
+  img.loadPixels();			// 이미지(img)의 pixels[]에 접근하기 전 픽셀값 로드
+  let x = int(random(img.width));
+  let y = int(random(img.height));
+  let index = (x + y * img.width) * 4;		// x행 y열의 픽셀 위치
+  let r = img.pixels[index+0]; 			// Red값 읽기
+  let g = img.pixels[index+1]; 			// Green값 읽기
+  let b = img.pixels[index+2]; 			// Blue값 읽기
+  
+  let gray = (r + g + b) / 3; 			// RGB 컬러값의 평균(→그레이스케일 밝기값)
+  if (gray < 100) {				// 밝기값이 100 미만일 때
+    noStroke();
+    fill(0);
+    ellipse(img.width+x, y, 5, 5);		// 캔버스 오른편에 작은 원으로 표시
+  }
+}

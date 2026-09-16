@@ -1,0 +1,22 @@
+// blendMode()를 사용한 동영상 프레임의 블랜딩
+
+let video;
+
+function setup() {
+  createCanvas(400, 300);
+  video = createVideo('bird.mp4');		// 동영상 파일의 비디오 요소 생성
+  video.hide();					// 비디오 요소 숨김
+  video.loop();					// 동영상 반복 실행
+}
+
+function draw() {
+  clear();					// 캔버스 비우기
+  if (mouseIsPressed) blendMode(ADD);
+  else blendMode(BLEND);
+
+  image(video, 0, 0, width, height);		// 캔버스에 동영상 프레임 표시
+
+  noStroke();
+  fill(0, 255, 0);
+  ellipse(width/2, height/2, 200, 200);		// 캔버스 중앙에 원 그리기
+}

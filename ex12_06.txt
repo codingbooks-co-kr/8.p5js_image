@@ -1,0 +1,36 @@
+// poseNet: 눈과 코 포인트에 원 표시 및 추적
+
+let video, poseNet, poses = [];
+
+function setup() {
+  createCanvas(640, 480);
+  video = createCapture(VIDEO);			// 실시간 비디오 요소 생성
+  video.hide();						// 비디오 요소 숨김
+  
+  poseNet = ml5.poseNet(video, getModel);	// poseNet 객체 생성→getModel() 호출
+  poseNet.on('pose', getResult);	// 포즈 감지되면 ‘pose’ 이벤트 발생→getResult() 호출
+}
+
+function draw() {
+  image(video, 0, 0, width, height);			// 캔버스에 비디오 프레임 표시
+  if (poses.length > 0) {				// 포즈가 있는 경우
+    let pose = poses[0].pose;
+    fill(255, 0, 0);
+    ellipse(pose.nose.x, pose.nose.y, 20, 20);		// 코 포인트에 원 표시
+    
+    fill(0, 0, 255);
+    ellipse(pose.leftEye.x, pose.leftEye.y, 20, 20);	// 왼쪽 눈 포인트에 원 표시
+    
+    fill(0, 0, 255);
+    ellipse(pose.rightEye.x, pose.rightEye.y, 20, 20);	// 오른쪽 눈 포인트에 원 표시
+  }
+}
+
+function getModel() {					// 콜백함수
+  console.log('poseNet 모델 로딩 완료!');
+}
+
+function getResult(results) {				// 콜백함수
+  //console.log(results);					// 인식 결과를 콘솔창에 출력
+  poses = results;					// 인식 결과를 전역변수인 poses에 저장
+}

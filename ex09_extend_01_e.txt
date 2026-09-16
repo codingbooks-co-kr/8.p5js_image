@@ -1,0 +1,26 @@
+// RGB & HSB 컬러모드
+
+function setup() {
+  createCanvas(300, 200);
+  background(200);
+  
+  colorMode(RGB);		// RGB 컬러모드: colorMode(RGB, 255);와 동일
+  let c = color(200, 100, 100);
+  fill(c);				// RGB 색상값 적용
+  ellipse(100, 100, 80, 80);
+
+  let r = red(c);		// RGB 모드의 red 요소 읽기
+  let g = green(c);		// RGB 모드의 green 요소 읽기
+  let b = blue(c);		// RGB 모드의 blue 요소 읽기
+  console.log(r, g, b);
+
+  colorMode(HSB);		// HSB 컬러모드: colorMode(HSB, 360, 100, 100);과 동일
+  c = color(0, 50, 78);
+  fill(c);				// HSB 색상값 적용
+  ellipse(200, 100, 80, 80);
+  
+  let h = hue(c);		// HSB 모드의 hue(색상) 요소 읽기
+  let s = saturation(c);		// HSB 모드의 saturation(채도) 요소 읽기
+  b = brightness(c);		// HSB 모드의 brightness(명도) 요소 읽기
+  console.log(h, s, b);
+}

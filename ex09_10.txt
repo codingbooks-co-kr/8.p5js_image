@@ -1,0 +1,32 @@
+// blend()를 사용한 두 이미지의 블랜딩(=혼합, 합성)
+
+let img0, img1, currentMode;
+
+function preload() {
+  img0 = loadImage('landscape0.jpg');
+  img1 = loadImage('landscape1.jpg');
+}
+
+function setup() {
+  createCanvas(img0.width, img0.height);
+  createDiv('숫자키(0∼9)와 문자키(-,=)를 눌러주세요');
+  currentMode = ADD;
+}
+
+function draw() {
+  image(img0, 0, 0);			// 사막 이미지
+  blend(img1, 0, 0, img1.width, img1.height, 0, 0, img0.width, img0.height, currentMode);
+
+  if (key === '1') currentMode = ADD;
+  if (key === '2') currentMode = LIGHTEST;
+  if (key === '3') currentMode = DARKEST;
+  if (key === '4') currentMode = HARD_LIGHT;
+  if (key === '5') currentMode = SOFT_LIGHT;
+  if (key === '6') currentMode = DIFFERENCE;
+  if (key === '7') currentMode = DODGE;
+  if (key === '8') currentMode = EXCLUSION;
+  if (key === '9') currentMode = OVERLAY;
+  if (key === '0') currentMode = MULTIPLY;
+  if (key === '-') currentMode = SCREEN;
+  if (key === '=') currentMode = BURN;
+}

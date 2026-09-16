@@ -1,0 +1,23 @@
+// 마우스의 좌우 움직임에 따라 이미지의 투명도 변경
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width*2, img.height);
+}
+
+function draw() {
+  background(200);		// 배경색
+  noTint();			// 원래 색상 밝기 (→이미지 본래의 색조 복원)
+  image(img, 0, 0);		// 원본 이미지 표시
+
+  let x = constrain(mouseX, 0, img.width);
+  let c = map(x, 0, img.width, 0, 255);
+
+  tint(255, c);			// 투명도(c) 변경, 동일 의미의 코드: tint(255, 255, 255, c);
+  image(img, img.width, 0);	// 출력 이미지 표시
+}

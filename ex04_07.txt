@@ -1,0 +1,28 @@
+// 좌우 반사하는 원
+
+let x = 0, velocity = 1;
+
+function setup() {
+  createCanvas(300, 300);
+}
+
+function draw() {
+  background(0);
+  bounce();			// 반사하는 동작 (함수 호출부)
+  display();			// 그리는 동작 (함수 호출부)
+  move();			// 이동하는 동작 (함수 호출부)
+}
+
+function bounce() {		// 반사하는 동작 (함수 본체)
+  if ( (x < 0) || (x > width) )
+    velocity *= - 1;
+}
+
+function display() {		// 그리는 동작 (함수 본체)
+  ellipse(x, height/2, 30, 30);
+  console.log(x);
+}
+
+function move() { 		// 이동하는 동작 (함수 본체)
+  x += velocity;
+}

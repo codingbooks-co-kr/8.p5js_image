@@ -1,0 +1,112 @@
+// 인식 결과에 따라 이모지 이동 제어
+
+let video, featureExtractor, classifier;
+let buttonData1, buttonData2, buttonData3, buttonTrain, buttonSaveModel; 
+let p, label = '시작', confidence = 0, num1 = 0, num2 = 0, num3 = 0, x = 375, velocity = 0;
+
+function setup() {
+  createCanvas(750, 300);
+  video = createCapture(VIDEO);		// 실시간 비디오 요소 생성
+  video.size(200, 150);				// 비디오 크기 설정
+
+  let options = { numLabels: 3 };		// 학습 및 분류할 레이블 수
+  featureExtractor = ml5.featureExtractor('MobileNet', options, getModel);
+  classifier = featureExtractor.classification(video);
+  
+  p = createP('');
+  p.style('font-size', '20px');			// 텍스트 폰트 크기(20픽셀) 설정
+  
+  buttonData1 = createButton('학습1: 정지');
+  buttonData1.size(150, 50); 			// 버튼 크기 설정
+  buttonData1.style('font-size', '20px');		// 버튼 폰트 크기 설정
+  buttonData1.mousePressed(addData1);	// 버튼 누르면 addData1() 자동 호출
+  
+  buttonData2 = createButton('학습2: 왼쪽');
+  buttonData2.size(150, 50); 			// 버튼 크기 설정
+  buttonData2.style('font-size', '20px');		// 버튼 폰트 크기 설정
+  buttonData2.mousePressed(addData2);	// 버튼 누르면 addData2() 자동 호출
+
+  buttonData3 = createButton('학습2: 오른쪽');
+  buttonData3.size(150, 50); 			// 버튼 크기 설정
+  buttonData3.style('font-size', '20px');		// 버튼 폰트 크기 설정
+  buttonData3.mousePressed(addData3);	// 버튼 누르면 addData3() 자동 호출
+
+  buttonTrain = createButton('학습/식별');
+  buttonTrain.size(150, 50); 			// 버튼 크기 설정
+  buttonTrain.style('font-size', '20px');		// 버튼 폰트 크기 설정
+  buttonTrain.mousePressed(train);		// 버튼 누르면 train() 자동 호출
+  
+  buttonSaveModel = createButton('모델저장');
+  buttonSaveModel.size(150, 50); 		// 버튼 크기 설정
+  buttonSaveModel.style('font-size', '20px');	// 버튼 폰트 크기 설정
+  buttonSaveModel.mousePressed(saveModel);	// 버튼 누르면 saveModel() 자동 호출
+}
+
+function draw() {
+  background(0);
+  p.html(label);				// 인식 결과 표시
+
+  textSize(100);
+  textAlign(CENTER, CENTER);
+  text('😀', x, height/2);		// 
+
+  x += velocity;
+  if (x < 0) x = width;
+  if (x > width) x = 0;
+  if (label === '정지') {			// 정지 인식 시
+    velocity = 0;
+  } else if (label === '왼쪽') {		// 왼쪽 인식 시
+    velocity = -2;
+  } else if (label === '오른쪽') {		// 오른쪽 인식 시
+    velocity = 2;
+  }
+}
+
+function getModel() {			// 콜백함수
+  label = '학습 버튼을 눌러 데이터 입력';
+}
+
+function addData1() {			// 콜백함수
+  classifier.addImage('정지');
+  num1++;
+  label = '학습 데이터1: ' + num1;
+}
+
+function addData2() {			// 콜백함수
+  classifier.addImage('왼쪽');
+  num2++;
+  label = '학습 데이터2: ' + num2;
+}
+
+function addData3() {			// 콜백함수
+  classifier.addImage('오른쪽');
+  num3++;
+  label = '학습 데이터3: ' + num3;
+}
+
+function train() {			// 콜백함수
+  classifier.train(training);
+}
+
+function training(loss) {			// 콜백함수
+  if (loss) {
+    label = '모델학습: ' + loss;		// 학습 진행 상황 출력
+  } else {
+    console.log('학습 완료');
+    classifier.classify(getResult);	// getResult() 호출 → 인식 결과 출력
+  }
+}
+
+function saveModel() {			// 콜백함수
+  classifier.save();			// 모델 저장(→컴퓨터의 다운로드 폴더)
+}
+
+function getResult(error, results) {	// 콜백함수
+  if (error) {				// 인식 오류 시
+    console.log(error);
+    return;				// 함수 실행 종료
+  } else {				// 인식 성공 시
+    label = results[0].label;		// 인식 결과
+    classifier.classify(getResult);	// getResult() 재호출함으로써 반복 인식
+  }
+}

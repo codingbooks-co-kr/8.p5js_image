@@ -1,0 +1,23 @@
+// 작은 원으로 이미지 점묘화 표현
+
+let img, x = 0, y = 0;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width*2, img.height);
+  background(0);
+}
+
+function draw() {
+  image(img, 0, 0);
+  x = int(random(img.width));
+  y = int(random(img.height));
+
+  let c = get(x, y);
+  noStroke();
+  fill(c);
+  ellipse(img.width+x, y, 5, 5);
+}

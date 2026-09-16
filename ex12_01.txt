@@ -1,0 +1,27 @@
+// imageClassifier: 콘솔창에 이미지 인식 결과 후보 리스트 출력
+
+let img, classifier;
+
+function preload() {
+  img = loadImage('puppy.jpg');
+}
+
+function setup() {
+  createCanvas(img.width, img.height);
+  classifier = ml5.imageClassifier('MobileNet', getModel);	// ❶getModel() 자동 호출
+  image(img, 0, 0);
+}
+
+function getModel() {			// 콜백함수
+  console.log('MobileNet 모델 로딩 완료 및 인식 시작!');
+  classifier.classify(img, getResult);	// ❷이미지(img) 주어지면 getResult() 자동 호출
+}
+
+function getResult(error, results) {	// 콜백함수
+  if (error) {				// 인식 오류 시
+    console.log(error);			// 또는 console.error(error); → 오류 메시지 출력
+    return;				// 함수 실행 종료
+  } else {				// 인식 성공 시
+    console.log(results);		// ❸인식결과 출력(후보 3개)
+  }
+}

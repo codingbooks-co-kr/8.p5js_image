@@ -1,0 +1,41 @@
+// 컬러에서 흑백 이미지로 변환 시 슬라이더를 좌우로 드래그함에 따라 문턱값 변화
+
+let img0, img1, slider;
+
+function preload() {
+  img0 = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img0.width*2, img0.height);
+  img1 = createImage(img0.width, img0.height);
+  slider = createSlider(0, 255, 127);		// 슬라이더 생성 (범위:0∼255, 초깃값:127)
+  slider.position(0, img0.height+10);		// 슬라이더 위치 설정
+  slider.size(img0.width);			// 슬라이더 크기 설정
+}
+
+function draw() {
+  img0.loadPixels();			// 이미지(img0)의 pixels[]에 접근하기 전 픽셀값 로드
+  img1.loadPixels();			// 이미지(img1)의 pixels[]에 접근하기 전 픽셀값 로드
+  for (let y = 0; y < img0.height; y++) {
+    for (let x = 0; x < img0.width; x++) {
+      let index = (x + y * img0.width) * 4;
+      let r = img0.pixels[index+0]; 		// Red값 읽기
+      let g = img0.pixels[index+1];		// Green값 읽기
+      let b = img0.pixels[index+2]; 		// Blue값 읽기
+      
+      let gray = (r + g + b) / 3; 		// RGB 컬러값의 평균(→그레이스케일 밝기값)
+      let threshold = slider.value();		// 문턱값(=슬라이더값) 읽기
+      if (gray > threshold) gray = 255;	// 픽셀 밝기가 문턱값보다 크면 흰색
+      else gray = 0; 				// 픽셀 밝기가 문턱값보다 작으면 검정색
+
+      img1.pixels[index+0] = gray;		// Red값 쓰기
+      img1.pixels[index+1] = gray;		// Green값 쓰기
+      img1.pixels[index+2] = gray;		// Blue값 쓰기
+      img1.pixels[index+3] = 255;		// Alpha값 쓰기 (투명: 0, 불투명: 255)
+    }
+  }
+  img1.updatePixels();				// 이미지(img1)의 픽셀값 변경사항 업데이트
+  image(img0, 0, 0); 				// 원본 이미지
+  image(img1, img0.width, 0); 		// 결과 이미지
+}

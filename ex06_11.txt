@@ -1,0 +1,73 @@
+// 3차원 입방체에 텍스처 매핑 및 회전
+
+let img0, img1, degree = 0; 
+
+function preload() {
+  img0 = loadImage('flower.jpg');
+  img1 = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(500, 500, WEBGL);
+  angleMode(DEGREES);
+  textureMode(NORMAL);
+}
+
+function draw() {
+  background(0);
+  rotateX(degree);	// x축 회전
+  rotateY(degree);	// y축 회전
+  rotateZ(degree);	// z축 회전
+  TextureMapping(100);
+  degree++;
+}
+
+function TextureMapping(d) {
+  texture(img0);
+  beginShape();			// 전면
+  vertex(-d, -d, d, 0, 0); 	// ①
+  vertex(d, -d, d, 1, 0); 	// ②
+  vertex(d, d, d, 1, 1); 	// ③
+  vertex(-d, d, d, 0, 1); 	// ④
+  endShape();
+
+  texture(img0);
+  beginShape();			// 좌면
+  vertex(-d, -d, -d, 0, 0); 	// ⑤
+  vertex(-d, -d, d, 1, 0); 	// ①
+  vertex(-d, d, d, 1, 1); 	// ④
+  vertex(-d, d, -d, 0, 1); 	// ⑧
+  endShape();  
+
+  texture(img0);
+  beginShape();			// 후면
+  vertex(d, -d, -d, 0, 0); 	// ⑥
+  vertex(-d, -d, -d, 1, 0); 	// ⑤
+  vertex(-d, d, -d, 1, 1); 	// ⑧
+  vertex(d, d, -d, 0, 1); 	// ⑦
+  endShape();
+
+  texture(img0);
+  beginShape();			// 우면
+  vertex(d, -d, d, 0, 0); 	// ②
+  vertex(d, -d, -d, 1, 0); 	// ⑥
+  vertex(d, d, -d, 1, 1); 	// ⑦
+  vertex(d, d, d, 0, 1); 	// ③
+  endShape();
+
+  texture(img1);
+  beginShape();			// 상면
+  vertex(-d, -d, -d, 0, 0); 	// ⑤
+  vertex(d, -d, -d, 1, 0); 	// ⑥
+  vertex(d, -d, d, 1, 1); 	// ②
+  vertex(-d, -d, d, 0, 1); 	// ①
+  endShape();
+
+  texture(img1);
+  beginShape();			// 하면
+  vertex(-d, d, d, 0, 0); 	// ④
+  vertex(d, d, d, 1, 0); 	// ③
+  vertex(d, d, -d, 1, 1); 	// ⑦
+  vertex(-d, d, -d, 0, 1); 	// ⑧
+  endShape();
+}

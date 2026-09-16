@@ -1,0 +1,24 @@
+// 이미지의 DILATE 필터링 누적 적용
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width, img.height);
+  image(img, 0, 0);		// 이미지 표시
+  filter(THRESHOLD);		// THRESHOLD 필터링 적용
+}
+
+function draw() { }
+
+function mousePressed() {	// 마우스를 누르면 DILATE 필터링
+  filter(DILATE);
+}
+
+function keyPressed() {		// 임의의 키를 누르면 원본 이진 영상 복원
+  image(img, 0, 0);
+  filter(THRESHOLD);
+}

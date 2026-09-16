@@ -1,0 +1,42 @@
+// 마우스의 좌우 움직임에 따라 컬러 이미지의 밝기 변화
+
+let img0, img1;
+
+function preload() {
+  img0 = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img0.width*2, img0.height);
+  img1 = createImage(img0.width, img0.height);
+}
+
+function draw() {
+  img0.loadPixels();			// 이미지(img0)의 pixels[]에 접근하기 전 픽셀값 로드
+  img1.loadPixels();			// 이미지(img1)의 pixels[]에 접근하기 전 픽셀값 로드
+  for (let y = 0; y < img0.height; y++) {
+    for (let x = 0; x < img0.width; x++) {
+      let index = (x + y * img0.width) * 4;
+      let r = img0.pixels[index+0]; 		// Red값 읽기
+      let g = img0.pixels[index+1];		// Green값 읽기
+      let b = img0.pixels[index+2]; 		// Blue값 읽기
+
+      let val = constrain(mouseX, 0, img0.width);
+      val = map(val, 0, img0.width, 0, 255);
+      r += val;					// 덧셈 연산
+      g += val;				// 덧셈 연산
+      b += val;				// 덧셈 연산
+      r = constrain(r, 0, 255);			// r값을 0∼255로 제한
+      g = constrain(g, 0, 255);		// g값을 0∼255로 제한
+      b = constrain(b, 0, 255);		// b값을 0∼255로 제한
+
+      img1.pixels[index+0] = r;		// Red값 쓰기
+      img1.pixels[index+1] = g;		// Green값 쓰기
+      img1.pixels[index+2] = b;		// Blue값 쓰기
+      img1.pixels[index+3] = 255;		// Alpha값 쓰기 (투명: 0, 불투명: 255)
+    }
+  }
+  img1.updatePixels();				// 이미지(img1)의 변경된 pixels[] 업데이트
+  image(img0, 0, 0); 				// 원본 이미지
+  image(img1, img0.width, 0); 		// 결과 이미지
+}

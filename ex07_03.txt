@@ -1,0 +1,24 @@
+// 한 이미지 상에서 마우스를 움직이면 움직인 부분은 다른 이미지로 변환 
+
+let img0, img1;
+
+function preload() {
+  img0 = loadImage('landscape0.jpg');		// 이미지: 사막
+  img1 = loadImage('landscape1.jpg');		// 이미지: 숲길
+}
+
+function setup() {
+  createCanvas(img0.width, img0.height);
+  image(img0, 0, 0);				// 초기 이미지(사막) 표시
+}
+
+function draw() { }
+
+function mouseMoved() {
+  // img1에서 마우스 현재 위치의 특정 영역을 복사 후 캔버스 상의 동일 위치에 붙여넣기
+  copy(img1, mouseX, mouseY, 30, 30, mouseX, mouseY, 30, 30);
+}
+
+function mousePressed() {			// 마우스를 누르면 초기 이미지 표시
+  image(img0, 0, 0);
+}

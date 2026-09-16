@@ -1,0 +1,22 @@
+// 비디오 영상의 좌표 이동 및 좌표 회전
+
+let video, degree = 0;
+
+function setup() {
+  createCanvas(400, 400);
+  angleMode(DEGREES);		// DEGREES 모드 설정 (0o∼360o 범위)
+  imageMode(CENTER);		// 이미지 정렬 모드: 프레임의 중심에서 폭, 높이 설정
+  video = createCapture(VIDEO);	// 실시간 비디오 요소 생성
+  video.hide();				// 비디오 요소 숨김
+}
+
+function draw() { 
+  background(0);
+  translate(width/2, height/2);		// 좌표 이동
+  rotate(degree);			// 좌표 회전
+  image(video, 0, 0, 200, 200);	// 캔버스에 비디오 프레임 표시
+}
+
+function mousePressed() {
+  degree += 6;				// 6도씩 누적
+}

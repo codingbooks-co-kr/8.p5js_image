@@ -1,0 +1,35 @@
+// 마우스를 누른 위치 좌표의 색상을 읽고 이미지의 색조 변경
+
+let img, c = 255, w = 50;
+
+function preload() {
+  img = loadImage('flower.jpg');
+}
+
+function setup() {
+  createCanvas(img.width+w*4, img.height);
+}
+
+function draw() {
+  background(255);
+  tint(c);				// 이미지의 색조를 c로 설정
+  image(img, 0, 0);
+  
+  noStroke();
+  fill(255, 255, 255);			// white 사각형
+  rect(img.width, 0, w, img.height);
+
+  fill(255, 0, 0);			// Red 사각형
+  rect(img.width+w, 0, w, img.height);
+
+  fill(0, 255, 0);			// Green 사각형
+  rect(img.width+w*2, 0, w, img.height);
+
+  fill(0, 0, 255);			// Blue 사각형
+  rect(img.width+w*3, 0, w, img.height);
+}
+
+function mousePressed() {		// 마우스를 누른 경우
+  c = get(mouseX, mouseY);		// 현재 마우스 위치 좌표의 색상(c) 획득
+  console.log(c);
+}

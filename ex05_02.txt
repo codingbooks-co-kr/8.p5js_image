@@ -1,0 +1,18 @@
+// 이미지를 복수 개 출력
+
+let img, x = 0, y = 0;
+
+function preload() {
+  img = loadImage('flower.jpg');
+}
+
+function setup() {
+  createCanvas(500, 500);
+}
+
+function draw() {
+  background(0);
+  image(img, x, y);			// 첫 번째 이미지 표시
+  image(img, x+100, y+100);		// 두 번째 이미지 표시
+  image(img, x+200, y+200);		// 세 번째 이미지 표시
+}

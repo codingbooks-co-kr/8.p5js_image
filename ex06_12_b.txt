@@ -1,0 +1,22 @@
+// 입방체에 텍스처 매핑 및 회전
+
+let img, degree = 0;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(500, 500, WEBGL);
+  angleMode(DEGREES);
+}
+
+function draw() {
+  background(0);
+  rotateX(degree);	// x축 회전
+  rotateY(degree);	// y축 회전
+  rotateZ(degree);	// z축 회전
+  texture(img);		// 텍스처 설정
+  box(200);		// 3차원 입방체
+  degree++;
+}

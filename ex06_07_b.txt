@@ -1,0 +1,35 @@
+// 두 개 이미지 좌표 이동 및 회전 (완성)
+
+let img, degree = 0;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(400, 400);
+  angleMode(DEGREES);
+  imageMode(CENTER);
+}
+
+function draw() { 
+  background(0);
+  
+  push();
+  translate(width/4, height/4);	// 이동
+  rotate(degree);		// 회전
+  scale(0.5);			// 축소
+  image(img, 0, 0, 200, 200);
+  pop();
+  
+  push();
+  translate(width/2, height/2);	// 이동
+  rotate(degree);		// 회전
+  scale(0.5);			// 축소
+  image(img, 0, 0, 200, 200);
+  pop();
+}
+
+function mousePressed() {
+  degree += 6;
+}

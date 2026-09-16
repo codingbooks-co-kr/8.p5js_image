@@ -1,0 +1,51 @@
+// 엠보싱(Embossing) 마스크를 사용한 필터링
+
+let Mask = [				// 엠보싱(Embossing) 마스크
+  [1, 1, 0],
+  [1, 0, -1],
+  [0, -1, -1],
+];
+let video;
+
+function setup() {
+  createCanvas(400, 300);
+  pixelDensity(1);			// 픽셀당 하나의 픽셀만 표시
+  video = createCapture(VIDEO);	// 실시간 비디오 요소 생성
+  video.size(width, height); 		// 비디오 요소의 크기 설정
+  video.hide();				// 비디오 요소 숨김
+}
+
+function draw() {
+  loadPixels();				// 캔버스의 pixels[]에 접근하기 전 픽셀값 로드
+  video.loadPixels();			// 비디오(video)의 pixels[]에 접근하기 전 픽셀값 로드
+
+  for (let y = 1; y < video.height-1; y++) {	// 입력 이미지의 상하 최외곽 픽셀 제외
+    for (let x = 1; x < video.width-1; x++) {	// 입력 이미지의 좌우 최외곽 픽셀 제외
+      let r = 0, g = 0, b = 0;			// 마스크 처리 시작 전 r, g, b 초기화
+
+      for (let i = 0; i < 3; i++) {		// 마스크 처리 시작 (마스크 크기=3*3)
+        for (let j = 0; j < 3; j++) {
+          let xIndex = x + i - 1; 		// xIndex:-1,0,1 (좌/중앙/우 인덱스)
+          let yIndex = y + j - 1;		// yIndex:-1,0,1 (상/중앙/하 인덱스)
+          let idx = (xIndex + yIndex * video.width) * 4;
+          r += video.pixels[idx+0] * Mask[i][j];
+          g += video.pixels[idx+1] * Mask[i][j];
+          b += video.pixels[idx+2] * Mask[i][j];
+        }
+      }						// 마스크 처리 끝
+      r += 127;
+      g += 127;
+      b += 127;
+      r = constrain(r, 0, 255);
+      g = constrain(g, 0, 255);
+      b = constrain(b, 0, 255);
+
+      let index = (x + y * video.width) * 4;
+      pixels[index+0] = r;		// Red값 쓰기
+      pixels[index+1] = g;		// Green값 쓰기
+      pixels[index+2] = b;		// Blue값 쓰기
+      pixels[index+3] = 255; 		// Alpha값 쓰기 (투명: 0, 불투명: 255)
+    }
+  }
+  updatePixels();			// 캔버스의 변경된 pixels[] 업데이트
+}

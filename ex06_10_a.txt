@@ -1,0 +1,23 @@
+// IMAGE 모드
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(400, 400, WEBGL);
+}
+
+function draw() {
+  background(0);
+  textureMode(IMAGE);	   // 텍스처 모드
+  texture(img);		   // 텍스처 설정
+  beginShape();
+  vertex(-200, -200, 0, 0);
+  vertex(200, -200, img.width, 0);
+  vertex(100, 200, img.width, img.height);
+  vertex(-100, 200, 0, img.height);
+  endShape();
+}

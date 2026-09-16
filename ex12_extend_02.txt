@@ -1,0 +1,29 @@
+// 캔버스에 이미지를 끌어당겨놓기로 출력
+
+let canvas, img;
+
+function setup() {
+  canvas = createCanvas(400, 400);	// 파일을 끌어당겨놓을 캔버스
+  canvas.drop(getFile)			// 파일을 끌어당겨놓으면 콜백함수인 getFile() 호출
+  background(0);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(30);
+  text('이미지 파일 Drag & Drop', width/2, height/2);
+}
+
+function getFile(file) {			// 콜백함수
+  // 이미지 정보 추출 가능: file.name, file.type, file.size, file.subtype, file.data
+  console.log(file.name, file.type, file.size);	// 파일 정보 읽기
+  console.log(file);				// 파일 전체 정보 확인
+  if (file.type === 'image') {			// 파일 형식이 'image'인 경우
+    img = loadImage(file.data, getImage);	// 파일 데이터 로딩 후 getImage() 호출
+  } else {
+    console.log('이미지 파일을 선택해 주세요!');
+  }
+}
+
+function getImage() {				// 콜백함수
+  resizeCanvas(img.width, img.height);		// 캔버스 크기를 이미지 크기로 재조정
+  image(img, 0, 0);				// 캔버스에 이미지 표시
+}

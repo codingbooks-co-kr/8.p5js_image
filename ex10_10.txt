@@ -1,0 +1,24 @@
+// 숫자키(1∼8)로 동영상 프레임의 다양한 필터링 결과 출력
+
+let video;
+
+function setup() {
+  createCanvas(400, 300);
+  video = createVideo('bird.mp4');		// 동영상 파일의 비디오 요소 생성
+  video.hide();					// 비디오 요소 숨김
+  video.loop();					// 동영상 반복 실행
+  createDiv('숫자키(1-8)를 눌러주세요');
+}
+
+function draw() {
+  image(video, 0, 0, width, height);		// 캔버스에 동영상 프레임 표시
+
+  if (key === '1') filter(THRESHOLD);
+  if (key === '2') filter(GRAY);
+  if (key === '3') filter(OPAQUE);
+  if (key === '4') filter(INVERT);
+  if (key === '5') filter(POSTERIZE, 3);
+  if (key === '6') filter(BLUR, 3);
+  if (key === '7') filter(ERODE);
+  if (key === '8') filter(DILATE);
+}

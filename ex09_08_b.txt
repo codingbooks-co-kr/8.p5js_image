@@ -1,0 +1,23 @@
+// 필터링: POSTERIZE
+
+let img, d, slider;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width, img.height);
+  slider = createSlider(2, 20, 2, 0.1);
+  slider.position(0, img.height+30);
+  slider.size(img.width);
+  d = createDiv('');
+  d.style('font-size', '20px');
+}
+
+function draw() {
+  image(img, 0, 0);
+  let val = slider.value();
+  filter(POSTERIZE, val);
+  d.html('POSTERIZE: ' + nf(val, 2, 1));
+}

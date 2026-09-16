@@ -1,0 +1,25 @@
+// sin() 함수를 사용한 이미지의 확대 및 축소
+
+let img, d, degree = 0;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(400, 400);
+  angleMode(DEGREES);		// DEGREES 모드 설정 (0o∼360o 범위)
+  imageMode(CENTER);		// 이미지 정렬 모드: 이미지의 중심에서 폭, 높이 설정
+  d = createDiv('');			// 브라우저 화면에 텍스트 출력
+  d.style('font-size', '20px');		// 텍스트 폰트 크기를 (20픽셀로) 설정
+}
+
+function draw() {
+  background(0);
+  s = abs(sin(degree)) * 2;		// s값의 범위: 0∼2
+  d.html('스케일값: ' + nf(s,1,1));
+  translate(width/2, height/2);		// 좌표를 캔버스 중심으로 이동
+  scale(s);				// 좌표 스케일 변경
+  image(img, 0, 0);			// 캔버스에 이미지 표시
+  degree++;				// 1도씩 증가
+}

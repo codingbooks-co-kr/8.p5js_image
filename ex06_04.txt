@@ -1,0 +1,23 @@
+// 이미지 x, y, z축 회전
+
+let img, degree = 0;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(400, 400, WEBGL);	// 3차원 렌더러 사용
+  angleMode(DEGREES);		// DEGREES 모드 설정 (0o∼360o 범위)
+  imageMode(CENTER);		// 이미지 정렬 모드: 이미지의 중심에서 폭, 높이 설정
+}
+
+function draw() {
+  background(0);
+  rotateX(degree);			// x축 회전
+  rotateY(degree);			// y축 회전
+  rotateZ(degree);			// z축 회전
+
+  image(img, 0, 0);			// 캔버스에 이미지 표시
+  degree++;				// 1도씩 증가
+}

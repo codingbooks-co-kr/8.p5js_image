@@ -1,0 +1,42 @@
+// poseNet: 신체 포인트와 골격을 각각 원과 선으로 표시
+
+let video, poseNet, poses = [];
+
+function setup() {
+  createCanvas(640, 480);
+  video = createCapture(VIDEO);	// 실시간 비디오 요소 생성
+  video.hide();				// 비디오 요소 숨김
+
+  poseNet = ml5.poseNet(video, getModel);	// poseNet 객체 생성→getModel() 호출
+  poseNet.on('pose', getResult);	// 포즈 감지되면 ‘pose’ 이벤트 발생→getResult() 호출
+}
+
+function draw() {
+  image(video, 0, 0, width, height);			// 캔버스에 비디오 프레임 표시
+  if (poses.length > 0) {				// 포즈가 있는 경우
+    let pose = poses[0].pose;
+    let skeleton = poses[0].skeleton;
+    for (let i = 0; i < pose.keypoints.length; i++) {	// 신체 포인트를 원으로 표시
+      let x = pose.keypoints[i].position.x;
+      let y = pose.keypoints[i].position.y;
+      fill(0, 0, 255);
+      ellipse(x, y, 10, 10);
+    }
+    for (let i = 0; i < skeleton.length; i++) {		// 신체 골격을 선으로 연결
+      let partA = skeleton[i][0];
+      let partB = skeleton[i][1];
+      stroke(255);
+      strokeWeight(2);
+      line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
+    }
+  }
+}
+
+function getModel() {			// 콜백함수
+  console.log('poseNet 모델 로딩 완료!');
+}
+
+function getResult(results) {		// 콜백함수
+  //console.log(results);			// 인식 결과를 콘솔창에 출력
+  poses = results;			// 인식 결과를 전역변수인 poses에 저장
+}

@@ -1,0 +1,31 @@
+// 버튼으로 동영상 파일 재생 또는 정지 제어
+
+let video, button, playing = false;
+
+function setup() {
+  createCanvas(400, 300);
+  video = createVideo('bird.mp4');	// 동영상 파일의 비디오 요소 생성
+  video.hide();				// 비디오 요소 숨김
+  video.loop();				// 동영상 반복 실행
+  
+  button = createButton('정지'); 	// 버튼 생성 (버튼 레이블은 '정지')
+  button.position(0, 250); 		// 버튼 위치 설정
+  button.size(100, 50); 		// 버튼 크기 설정
+  button.style('font-size', '20px');	// 버튼 폰트 크기 설정
+  button.mousePressed(controlVideo); 	// 버튼 누르면 controlVideo() 자동 호출
+}
+
+function draw() {
+  image(video, 0, 0, width, height);	// 캔버스에 동영상 프레임 표시
+}
+
+function controlVideo() {		// 콜백함수
+  if (playing) {
+    video.loop();			// 동영상 반복 실행
+    button.html('정지');			// 버튼 레이블을 '정지'로 변경
+  } else {
+    video.pause();			// 동영상 일시 정지
+    button.html('재생');			// 버튼 레이블을 '재생'으로 변경
+  }
+  playing = !playing;			// 토글
+}

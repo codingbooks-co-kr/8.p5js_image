@@ -1,0 +1,19 @@
+// 마우스의 현재 위치 좌표의 이미지 픽셀값을 읽고 색상으로 표시
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width*2, img.height);
+}
+
+function draw() {
+  image(img, 0, 0);			// 원본 이미지 표시
+  let c = get(mouseX, mouseY);	// 마우스 현재 위치 좌표의 픽셀값(=색상값) 읽기
+
+  noStroke();
+  fill(c);					// 픽셀값(=색상값)을 사각형의 색상으로 표시
+  rect(img.width, 0, img.width, img.height);
+}

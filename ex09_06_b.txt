@@ -1,0 +1,22 @@
+// 다른 두 개의 이미지 겹치기
+
+let img0, img1;
+
+function preload() {
+  img0 = loadImage('landscape0.jpg');
+  img1 = loadImage('landscape1.jpg');
+}
+
+function setup() {
+  createCanvas(img0.width*2, img0.height);
+}
+
+function draw() {
+  background(200);
+  
+  noTint(); 		// 본래 색조 복원
+  image(img0, 0, 0);
+  
+  tint(255, 127); 	// 반투명 색조
+  image(img1, mouseX, 0);
+}

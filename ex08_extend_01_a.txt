@@ -1,0 +1,29 @@
+// 입방체 회전, 숫자키를 누를 때 저장
+
+let img, degree = 0;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(500, 500, WEBGL);
+  //pixelDensity(1);
+}
+
+function draw() {
+  background(0);
+  rotateX(radians(degree));
+  texture(img);
+  box(200);
+  degree++;
+}
+
+function keyPressed() {
+  if (key === '1') {
+    save('outputCanvas1.png');
+  }
+  if (key === '2') {
+    saveCanvas('outputCanvas2', 'png');
+  }
+}

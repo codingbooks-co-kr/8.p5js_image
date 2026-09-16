@@ -1,0 +1,21 @@
+// 이미지에서 랜덤한 위치 좌표의 픽셀값을 읽고 캔버스 상에 쓰기
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width, img.height);
+}
+
+function draw() {
+  for (let i = 0; i < 100; i++) {		// 픽셀값을 읽고 쓰는 작업을 빠르게 반복 처리
+    let x = int(random(width));
+    let y = int(random(height));
+    let c = img.get(x, y);		// ❶이미지(img)의 (x, y) 좌표에서 픽셀값 읽기
+    set(x, y, c);			// ❷캔버스의 (x, y) 좌표에 픽셀값(c) 쓰기
+  }
+  updatePixels();			// 캔버스의 변경된 픽셀값 업데이트
+}

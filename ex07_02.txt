@@ -1,0 +1,25 @@
+// 한 이미지의 랜덤 영역을 복사하여 또 다른 이미지 상에 표시
+
+let img0, img1;
+
+function preload() {
+  img0 = loadImage('landscape0.jpg');		// 이미지: 사막
+  img1 = loadImage('landscape1.jpg');		// 이미지: 숲길
+}
+
+function setup() {
+  createCanvas(img0.width, img0.height);
+  image(img0, 0, 0);				// 초기 이미지(사막) 표시
+}
+
+function draw() {
+  let x = int(random(img0.width));		// 랜덤 x값을 정수로 변환
+  let y = int(random(img0.height));		// 랜덤 y값을 정수로 변환
+
+  // 이미지(img1)의 특정 영역을 복사 후 캔버스 상의 동일 위치에 붙여넣기(매개변수는 정수)
+  copy(img1, x, y, 20, 20, x, y, 20, 20);
+}
+
+function mousePressed() {			// 마우스를 누르면 원본 이미지 표시
+  image(img0, 0, 0);
+}

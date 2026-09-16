@@ -1,0 +1,16 @@
+// 원을 두 개 생성
+
+function setup() {
+  createCanvas(300, 300);
+}
+
+function draw() {
+  background(0);
+  display(100, 100);			// 함수 호출부
+  display(200, 200);			// 함수 호출부
+}
+
+function display(x, y) {		// 함수 본체
+  fill(255, 255, 0);
+  ellipse(x, y, 120, 120);
+}

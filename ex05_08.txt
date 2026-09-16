@@ -1,0 +1,19 @@
+// 캔버스 화면 전체에 작은 이미지를 반복 출력
+
+let img, size = 100;
+
+function preload() {
+  img = loadImage('flower.jpg');
+}
+
+function setup() {
+  createCanvas(500, 500);
+}
+
+function draw() {
+  for (let y = 0; y < height; y += size) {
+    for (let x = 0; x < width; x += size) {
+      image(img, x, y, size, size);		// 중첩 for문으로 이미지를 반복 출력
+    }
+  }
+}

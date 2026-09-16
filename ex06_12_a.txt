@@ -1,0 +1,17 @@
+// 입방체 회전
+
+let degree = 0;
+
+function setup() {
+  createCanvas(500, 500, WEBGL);
+  angleMode(DEGREES);
+}
+
+function draw() {
+  background(0);
+  rotateX(degree);	// x축 회전
+  rotateY(degree);	// y축 회전
+  rotateZ(degree);	// z축 회전
+  box(200);		// 3차원 입방체
+  degree++;
+}

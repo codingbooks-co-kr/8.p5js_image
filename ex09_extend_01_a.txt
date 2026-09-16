@@ -1,0 +1,14 @@
+// RGB & HSB 컬러모드
+
+function setup() {
+  createCanvas(300, 200);
+  background(200);
+  
+  colorMode(RGB);	// RGB 컬러모드: colorMode(RGB, 255, 255, 255);와 동일
+  fill(200, 100, 100);	// RGB 색상값
+  ellipse(100, 100, 80, 80);
+
+  colorMode(HSB);	// HSB 컬러모드: colorMode(HSB, 360, 100, 100);과 동일
+  fill(0, 50, 78);	// HSB 색상값
+  ellipse(200, 100, 80, 80);
+}

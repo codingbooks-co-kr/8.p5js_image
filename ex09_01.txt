@@ -1,0 +1,27 @@
+// 이미지의 밝기(=명암) 색조를 네 가지로 다르게 설정
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width*2, img.height*2);
+}
+
+function draw() {
+  background(255);
+
+  tint(60);		// 이미지의 밝기 색조 설정 (→어두움)
+  image(img, 0, 0);
+
+  tint(127);		// 이미지의 밝기 색조 설정 (→중간 밝기)
+  image(img, img.width, 0);
+
+  tint(255); 		// 이미지의 밝기 색조 설정 (→원래 색상 밝기)
+  image(img, 0, img.height);
+  
+  noTint(); 		// 이미지 본래의 색조 복원 (→원래 색상 밝기)
+  image(img, img.width, img.height);
+}

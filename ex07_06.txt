@@ -1,0 +1,23 @@
+// 마우스의 상하 움직임으로 이미지의 가로축 픽셀값 읽고 선의 색상으로 표시
+
+let img;
+
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width*2, img.height);
+}
+
+function draw() {
+  image(img, 0, 0);				// 원본 이미지 표시
+  let y = constrain(mouseY, 0, img.height);
+  for (let x = 0; x < img.width; x++) {		// 이미지의 가로축 반복 처리
+    let c = get(x, y);				// 이미지의 픽셀값(=색상값) 읽기
+    stroke(c);					// 픽셀값(=색상값)을 선의 색상으로 표시
+    line(x+img.width, 0, x+img.width, img.height);
+  }
+  stroke(0);
+  line(0, y, img.width, y);			// 마우스의 현재 y축 위치 선
+}

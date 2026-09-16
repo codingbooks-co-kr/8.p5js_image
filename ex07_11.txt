@@ -1,0 +1,27 @@
+// 컬러 이미지의 픽셀값을 차례로 읽고 그레이스케일 이미지로 출력 (출력 이미지만 표시)
+
+let img;
+function preload() {
+  img = loadImage('landscape.jpg');
+}
+
+function setup() {
+  createCanvas(img.width, img.height);
+  noLoop();				// draw() 반복 실행 정지
+}
+
+function draw() {
+  image(img, 0, 0);			// 원본 이미지를 캔버스 상에 표시
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      let c = get(x, y);			// 캔버스 상의 이미지 픽셀값 읽기
+      let r = red(c);
+      let g = green(c);
+      let b = blue(c);
+      let gray = (r + g + b) / 3;	// RGB 컬러값의 평균 (→그레이스케일 밝기값)
+      gray = color(gray, gray, gray);	// 동일 코드: gray = color(gray);
+      set(x, y, gray);			// 캔버스의 (x,y) 좌표에 픽셀값(→gray) 쓰기
+    }
+  }
+  updatePixels();			// 캔버스의 변경된 픽셀값 업데이트
+}
