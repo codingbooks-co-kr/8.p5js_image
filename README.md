@@ -1,8 +1,8 @@
 # **P5.js 영상처리**  
 - 예제는 p5.js 1.x, 아두이노 1.8.x를 기준으로 작성
 - p5.js 2.x에서의 수정사항: https://youtu.be/amVVN5NE75Q?si=lsOsBpSVCw3qMA4C
-- (교재수정) index.html의 ml5.js 수정전: https://unpkg.com/ml5@latest/dist/ml5.min.js
-- (교재수정) index.html의 ml5.js 수정후: https://unpkg.com/ml5@0.12.2/dist/ml5.min.js
+- (교재수정) index.html의 ml5.js 수정전: https://unpkg.com/ml5@latest/dist/ml5.min.js...
+- (교재수정) index.html의 ml5.js 수정후: https://unpkg.com/ml5@0.12.2/dist/ml5.min.js...
 - 다운로드: Code → Download ZIP
 - 도서구매: https://codingbooks.co.kr
 - 무료강의: www.youtube.com/@codingbooks-co-kr
